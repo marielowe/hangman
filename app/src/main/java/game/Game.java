@@ -1,21 +1,27 @@
 package game;
-
-import java.util.Random;
+import java.util.ArrayList;
 
 public class Game {
-private String word; //this is a class property
-private Integer counter = 10; 
-static final String[] DICTIONARY={"MAKERS", "CANDIES", "JIM", "LONDON"};
 
-  public Game(String word) {
-    this.word = word; //this is like @word = word. this is the constructor line 5-7
+public ArrayList<Character> guessedLetters = new ArrayList<>();
+private Integer counter = 10;
+private String randomWord;  //this is a class property
+
+  public Game(WordChooser chooser) {
+   //this is like @chooser = chooser. this is the constructor line 5-7
+    this.randomWord = chooser.getRandomWordFromDictionary();
+      //this is like @chooser = chooser.
+    }
+    public ArrayList<Character> getAll() {
+      return guessedLetters;
   }
+
   public String getWordToGuess(){
     StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < this.word.length(); i++) {
-      Character currentLetter = word.charAt(0);
+    for (int i = 0; 0 < this.randomWord.length(); i++) {
+      Character currentLetter = randomWord.charAt(0); 
       if (i == 0) {
-          builder.append(currentLetter);
+          builder.append(currentLetter); 
       } else {
           builder.append("_");
       }
@@ -25,9 +31,14 @@ static final String[] DICTIONARY={"MAKERS", "CANDIES", "JIM", "LONDON"};
   public Integer getRemainingAttempts(){
 return this.counter;
   }  
-  public String getRandomWordFromDictionary(){
-    Random randomWord = new Random();
-    return DICTIONARY[randomWord.nextInt(DICTIONARY.length)];
+  public Boolean guessLetter(Character letter){
+if(this.randomWord.indexOf(letter) == -1){
+  counter--;
+  return false;
+} else{
+  guessedLetters.add(letter);
+  return true;
+} 
   }
 }
 
